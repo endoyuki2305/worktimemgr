@@ -1,1 +1,3 @@
-# worktimemgr-test
+# worktimemgr
+
+社員の出退勤を月別にまとめ、給与計算時に利用します。
