@@ -1,0 +1,49 @@
+```
+@startuml みやもとさんシーケンス図
+hide footbox
+participant ユーザ
+participant Slack
+participant みやもとさん
+participant GoogleSheets
+
+ユーザ -> Slack : 出退勤を呟く
+Slack -> みやもとさん : Outgoing Webhooks
+
+activate みやもとさん
+  みやもとさん -> GoogleSheets : 出退勤時刻を保存
+  Slack <-- みやもとさん : Incoming Webhooks
+deactivate みやもとさん
+
+ユーザ <- Slack : 戻りメッセージ
+@enduml
+
+
+@startuml 月間勤務時間計算シーケンス図
+hide footbox
+participant ユーザ
+participant 個人別出退勤シート
+participant 客先別休憩残業時間シート
+participant 月間勤務時間シート
+participant GAS
+
+ユーザ -> 月間勤務時間シート : 年、月、ユーザ名、客先名を入力
+
+activate 月間勤務時間シート
+  GAS <- 月間勤務時間シート : セル内関数が自動起動
+deactivate 月間勤務時間シート
+
+activate GAS
+  GAS -> 個人別出退勤シート : 指定月の出退勤データを取得
+  GAS -> 客先別休憩残業時間シート : 客先の休憩残業時間を取得
+  GAS -> 月間勤務時間シート : 出退勤時刻から勤務時間を算出
+deactivate GAS
+
+ユーザ -> 月間勤務時間シート : 実勤務時間を算出
+月間勤務時間シート -> GAS : 関数ハンドラを起動
+
+activate GAS
+  GAS -> 月間勤務時間シート : 休憩時間、残業時間を算出
+deactivate GAS
+
+@enduml
+```
