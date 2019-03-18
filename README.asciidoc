@@ -1,17 +1,20 @@
 # worktimemgr
 
-社員の出退勤を月別にまとめ、給与計算時に利用します。出退勤データは各社員が毎日、スマートフォンあるいはPCからSlackの自社ワークスペース、#timesheets内に呟く。それを[勤怠管理bot - みやもとさん](https://github.com/masuidrive/miyamoto)を通じてGoogle Spreadsheetに書き込む。
+### 概要
+社員の出退勤を月別にまとめ、給与計算時に利用します。出退勤データは各社員が毎日、スマートフォンあるいはPCからSlackの自社ワークスペース、#timesheets内に呟く。それを https://github.com/masuidrive/miyamoto[勤怠管理bot - みやもとさん] を通じてGoogle Spreadsheetに書き込む。
 
 みやもとさんは残業時間、月別勤務時間集計などの機能が未実装である為、それら機能はユーザーが実装する必要がある。worktimemgr(仮名)は、各社員の出退勤シートから指定月のデータを抽出し、休憩時間タイムシートで定義された休憩時間を引いた勤務時間を算出する。
 
+### みやもとさん シーケンス図
 image::https://user-images.githubusercontent.com/12984133/54501774-9ebc1c80-496a-11e9-8205-501cf584d8fe.png[miyamotosan]
 
-image::https://user-images.githubusercontent.com/12984133/54505816-fa8fa100-497c-11e9-8d15-ecd765a5c0da.png[workingtime]
+### 勤務時間計算 シーケンス図
+image::https://user-images.githubusercontent.com/12984133/54506973-6cb6b480-4982-11e9-8497-f4bd554a03cd.png[workingtime]
 
-```
+
 @startuml みやもとさんシーケンス図
 hide footbox
-
+```
 participant ユーザ
 participant Slack
 participant みやもとさん
@@ -28,13 +31,14 @@ deactivate みやもとさん
 ユーザ <- Slack : 戻りメッセージ
 @enduml
 
+
 @startuml 月間勤務時間計算シーケンス図
 hide footbox
 participant ユーザ
-participant GAS
 participant 個人別出退勤シート
 participant 客先別休憩残業時間シート
 participant 月間勤務時間シート
+participant GAS
 
 ユーザ -> 月間勤務時間シート : 年、月、ユーザ名、客先名を入力
 
@@ -48,9 +52,12 @@ activate GAS
   GAS -> 月間勤務時間シート : 出退勤時刻から勤務時間を算出
 deactivate GAS
 
-  ユーザ -> GAS : 実勤務時間を算出
+ユーザ -> 月間勤務時間シート : 実勤務時間を算出
+月間勤務時間シート -> GAS : 関数ハンドラを起動
+
 activate GAS
   GAS -> 月間勤務時間シート : 休憩時間、残業時間を算出
 deactivate GAS
+
 @enduml
 ```
