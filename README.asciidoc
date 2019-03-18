@@ -1,0 +1,30 @@
+# worktimemgr
+
+社員の出退勤を月別にまとめ、給与計算時に利用します。出退勤データは各社員が毎日、スマートフォンあるいはPCからSlackの自社ワークスペース、#timesheets内に呟く。それを https://github.com/masuidrive/miyamoto[勤怠管理bot - みやもとさん] を通じてGoogle Spreadsheetに書き込む。
+
+みやもとさんは残業時間、月別勤務時間集計などの機能が未実装である為、それら機能はユーザーが実装する必要がある。worktimemgr(仮名)は、各社員の出退勤シートから指定月のデータを抽出し、休憩時間タイムシートで定義された休憩時間を引いた勤務時間を算出する。
+
+image::https://user-images.githubusercontent.com/12984133/54501774-9ebc1c80-496a-11e9-8205-501cf584d8fe.png[miyamotosan]
+
+```
+@startuml みやもとさんシーケンス図
+hide footbox
+
+participant ユーザ
+participant Slack
+participant みやもとさん
+participant GoogleSheets
+
+ユーザ -> Slack : 出退勤を呟く
+Slack -> みやもとさん : Outgoing Webhooks
+みやもとさん -> GoogleSheets : 出退勤時刻を保存
+
+activate みやもとさん
+  Slack <-- みやもとさん : 戻りメッセージ
+deactivate みやもとさん
+
+activate Slack
+  ユーザ <-- Slack : 戻りメッセージ
+deactivate Slack
+@enduml
+```
