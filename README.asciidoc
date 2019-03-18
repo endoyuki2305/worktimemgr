@@ -12,9 +12,9 @@ image::https://user-images.githubusercontent.com/12984133/54501774-9ebc1c80-496a
 image::https://user-images.githubusercontent.com/12984133/54506973-6cb6b480-4982-11e9-8497-f4bd554a03cd.png[workingtime]
 
 
+```
 @startuml みやもとさんシーケンス図
 hide footbox
-```
 participant ユーザ
 participant Slack
 participant みやもとさん
