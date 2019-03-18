@@ -8,7 +8,7 @@
 ### みやもとさん シーケンス図
 毎日出退勤時に、Slackの#timesheetsチャンネルに「おはようございます」「お疲れ様でした」と呟くと、Slack経由でGoogle Sheetsに日々の出退勤時間が保存される。
 
-image::https://user-images.githubusercontent.com/12984133/54501774-9ebc1c80-496a-11e9-8205-501cf584d8fe.png[miyamotosan]
+image::https://user-images.githubusercontent.com/12984133/54511966-076cbe80-4996-11e9-9a8a-9b24f851fcba.png[miyamotosan]
 
 ### 勤務時間計算 シーケンス図
 Google Sheetsの'Slack Timesheets'スプレッドシート内、'月間合計'シートの1行目に、集計したい年、月、ユーザ名、客先名を入力すると勤務時間が表示される。客先の休憩時間を考慮した勤務時間を計算する場合は、「カスタム」メニュー内の「実勤務時間を再計算する」メニューアイテムを選択すると、客先休憩タイムテーブルを考慮した実勤務時間がE列（休憩時間考慮）に表示される。
