@@ -107,6 +107,12 @@ function subtractBreakTime(today, rest) {
  * @param appliedTime 休憩時間適用後の勤務時間
  */
 function writeCalculatedTime(sheet, appliedTime) {
+  // 2019年03月31日　以前の出力値削除対応　Start
+  // 計算した勤務時間を出力する前に前回の出力値を削除する
+  sheet.getRange('E3:E33').clearContent();
+  // 2019年03月31日　以前の出力値削除対応　End
+
+  // 計算した勤務時間をE列に出力する
   sheet.getRange('E3:E33').setValues(appliedTime);
 }
 
