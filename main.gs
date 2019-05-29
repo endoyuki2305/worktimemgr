@@ -115,6 +115,7 @@ function writeCalculatedTime(sheet, appliedTime) {
  * @param sheet 月間合計シート
  * @returns 勤務時間 [[出勤,退勤,勤務時間],[...]]
  */
+//test_comment2
 function getWorkingTime(sheet) {
   return sheet.getRange('B3:D33').getValues();
 }
